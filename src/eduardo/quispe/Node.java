@@ -3,23 +3,31 @@ package eduardo.quispe;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public abstract class Node {
+abstract class Node {
 
-    BigDecimal value, bias;
+    BigDecimal output, bias;
     ArrayList<? extends Edge> weights = new ArrayList<>();
 
-    public Node(BigDecimal value, ArrayList<? extends Edge> weights, Bias bias) {
+    Node(BigDecimal output, ArrayList<? extends Edge> weights, Bias bias) {
         this.bias = bias == null ? null : bias.getValue();
-        this.value = value;
+        this.output = output;
         this.weights = weights;
     }
 
-    abstract ArrayList<? extends Edge> getWeights();
+    ArrayList<? extends Edge> getWeights(){
+        return this.weights;
+    }
 
-    abstract BigDecimal getOutputValue();
+    BigDecimal getOutputValue(){
+        return this.output;
+    }
 
-    public BigDecimal getBias(){
+    BigDecimal getBias(){
         return this.bias;
+    }
+
+    void setOutputValue(BigDecimal newOutput){
+        this.output = newOutput;
     }
 
     abstract void update(BigDecimal... newWeights);

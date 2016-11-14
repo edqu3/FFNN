@@ -3,21 +3,10 @@ package eduardo.quispe;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class OutputNode extends Node {
+class OutputNode extends Node {
 
-    public OutputNode(BigDecimal value, ArrayList<Edge> weights, Bias bias) {
+    OutputNode(BigDecimal value, ArrayList<Edge> weights, Bias bias) {
         super(value, weights, bias);
-    }
-
-    @Override
-    ArrayList<? extends Edge> getWeights() {
-        return super.weights;
-    }
-
-    @Override
-    BigDecimal getOutputValue() {
-        /* hidden nodes do not have node values*/
-        return null;
     }
 
     @Override

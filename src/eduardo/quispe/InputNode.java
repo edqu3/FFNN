@@ -17,12 +17,12 @@ public class InputNode extends Node {
 
     @Override
     BigDecimal getOutputValue() {
-        return super.value;
+        return super.output;
     }
 
     @Override
     void update(BigDecimal... newWeights) {
-        super.value = newWeights[0];
+        super.output = newWeights[0];
     }
 
 }

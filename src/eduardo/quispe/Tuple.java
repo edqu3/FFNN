@@ -1,11 +1,13 @@
 package eduardo.quispe;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Tuple {
     private final ArrayList<? extends Node> hiddenNodes;
     private final ArrayList<? extends Node> outputNodes;
     private final ArrayList<? extends Node> inputNodes;
+    private final Classifier classifier;
 
     @SafeVarargs
     Tuple(Classifier classifier, ArrayList<? extends Node>... nodes) {
@@ -13,6 +15,7 @@ public class Tuple {
         this.inputNodes = nodes[0];
         this.hiddenNodes = nodes[1];
         this.outputNodes = nodes[2];
+        this.classifier = classifier;
     }
 
     public ArrayList<? extends Node> getHiddenNodes() {
@@ -25,6 +28,10 @@ public class Tuple {
 
     public ArrayList<? extends Node> getOutputNodes() {
         return outputNodes;
+    }
+
+    public BigDecimal getClassifierValue() {
+        return this.classifier.getValue();
     }
 
     static class TupleDefinition {
