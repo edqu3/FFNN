@@ -1,29 +1,30 @@
 package eduardo.quispe;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Tuple {
+    private final ArrayList<? extends Node> hiddenNodes;
+    private final ArrayList<? extends Node> outputNodes;
+    private final ArrayList<? extends Node> inputNodes;
 
-    private ArrayList<Edge> edges = new ArrayList<>();
-    private ArrayList<Bias> biases = new ArrayList<>();
-    private final TupleDefinition TP;
+    @SafeVarargs
+    Tuple(Classifier classifier, ArrayList<? extends Node>... nodes) {
 
-    public Tuple(TupleDefinition tp, BigDecimal[] biases, BigDecimal... weights) {
-        this.TP = tp;
+        this.inputNodes = nodes[0];
+        this.hiddenNodes = nodes[1];
+        this.outputNodes = nodes[2];
+    }
 
-        for (int i = 0; i < TP.getInputNodes(); i++) {
+    public ArrayList<? extends Node> getHiddenNodes() {
+        return hiddenNodes;
+    }
 
-        }
+    public ArrayList<? extends Node> getInputNodes() {
+        return inputNodes;
+    }
 
-        for (int i = TP.getInputNodes(); i < TP.getHiddenNodes(); i++) {
-
-        }
-
-        for (int i = TP.getHiddenNodes(); i < TP.getOuterNodes(); i++) {
-
-        }
-
+    public ArrayList<? extends Node> getOutputNodes() {
+        return outputNodes;
     }
 
     static class TupleDefinition {
@@ -45,7 +46,9 @@ public class Tuple {
             return hiddenNodes;
         }
 
-        public int getNodeCount() { return inputNodes + hiddenNodes + outerNodes; }
+        public int getNodeCount() {
+            return inputNodes + hiddenNodes + outerNodes;
+        }
 
         static TupleDefinition createTupleDefinition(int inputNodes, int hiddenNodes, int outerNodes) {
             return new TupleDefinition(inputNodes, hiddenNodes, outerNodes);

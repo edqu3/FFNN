@@ -1,7 +1,33 @@
 package eduardo.quispe;
 
-public class OutputNode {
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
+public class OutputNode extends Node {
 
+    public OutputNode(BigDecimal value, ArrayList<Edge> weights, Bias bias) {
+        super(value, weights, bias);
+    }
 
+    @Override
+    ArrayList<? extends Edge> getWeights() {
+        return super.weights;
+    }
+
+    @Override
+    BigDecimal getNodeValue() {
+        /* hidden nodes do not have node values*/
+        return null;
+    }
+
+    @Override
+    void update(BigDecimal... newWeights) {
+        if (newWeights.length == super.weights.size()) {
+            ArrayList<HiddenWeight> hiddenWeights = new ArrayList<>();
+            for (BigDecimal w : newWeights) {
+                hiddenWeights.add(new HiddenWeight(w));
+            }
+            super.weights = hiddenWeights;
+        }
+    }
 }

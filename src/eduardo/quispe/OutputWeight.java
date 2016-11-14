@@ -11,6 +11,6 @@ public class OutputWeight extends Edge {
 
     @Override
     public BigDecimal getValue() {
-        return null;
+        return super.value;
     }
 }
