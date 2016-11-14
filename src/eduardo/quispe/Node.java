@@ -16,7 +16,7 @@ public abstract class Node {
 
     abstract ArrayList<? extends Edge> getWeights();
 
-    abstract BigDecimal getNodeValue();
+    abstract BigDecimal getOutputValue();
 
     public BigDecimal getBias(){
         return this.bias;

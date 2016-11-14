@@ -15,7 +15,7 @@ public class HiddenNode extends Node {
     }
 
     @Override
-    BigDecimal getNodeValue() {
+    BigDecimal getOutputValue() {
         /* hidden nodes do not have node values*/
         return null;
     }

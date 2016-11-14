@@ -85,6 +85,7 @@ public class Main {
 
         // declare temp variables
         for (int i = 0; i < epochs; i++) {
+            System.out.println("Epoch " + i);
             for (Tuple tuple : tuples) {
                 Helpers.calcNetIO(tuple.getInputNodes(), tuple.getHiddenNodes());
             }

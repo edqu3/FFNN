@@ -16,7 +16,7 @@ public class InputNode extends Node {
     }
 
     @Override
-    BigDecimal getNodeValue() {
+    BigDecimal getOutputValue() {
         return super.value;
     }
 
