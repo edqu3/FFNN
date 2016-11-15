@@ -24,11 +24,11 @@ class OutputNode extends Node {
         }
     }
 
-    public void setError(BigDecimal error) {
+    void setError(BigDecimal error) {
         this.error = error;
     }
 
-    public BigDecimal getError() {
+    BigDecimal getError() {
         if (error != null)
             return error;
         return null;

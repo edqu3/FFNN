@@ -3,34 +3,39 @@ package eduardo.quispe;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class Tuple {
+class Tuple {
     private final ArrayList<? extends Node> hiddenNodes;
     private final ArrayList<? extends Node> outputNodes;
     private final ArrayList<? extends Node> inputNodes;
     private final Classifier classifier;
+    private final BigDecimal learningRate;
 
     @SafeVarargs
-    Tuple(Classifier classifier, ArrayList<? extends Node>... nodes) {
-
+    Tuple(Classifier classifier, BigDecimal learningRate, ArrayList<? extends Node>... nodes) {
+        this.learningRate = learningRate;
         this.inputNodes = nodes[0];
         this.hiddenNodes = nodes[1];
         this.outputNodes = nodes[2];
         this.classifier = classifier;
     }
 
-    public ArrayList<? extends Node> getHiddenNodes() {
+    BigDecimal getLearningRate() {
+        return learningRate;
+    }
+
+    ArrayList<? extends Node> getHiddenNodes() {
         return hiddenNodes;
     }
 
-    public ArrayList<? extends Node> getInputNodes() {
+     ArrayList<? extends Node> getInputNodes() {
         return inputNodes;
     }
 
-    public ArrayList<? extends Node> getOutputNodes() {
+     ArrayList<? extends Node> getOutputNodes() {
         return outputNodes;
     }
 
-    public BigDecimal getClassifierValue() {
+    BigDecimal getClassifierValue() {
         return this.classifier.getValue();
     }
 
@@ -41,19 +46,19 @@ public class Tuple {
                 outerNodes;
 
 
-        public int getInputNodes() {
+         int getInputNodes() {
             return inputNodes;
         }
 
-        public int getOuterNodes() {
+         int getOuterNodes() {
             return outerNodes;
         }
 
-        public int getHiddenNodes() {
+         int getHiddenNodes() {
             return hiddenNodes;
         }
 
-        public int getNodeCount() {
+         int getNodeCount() {
             return inputNodes + hiddenNodes + outerNodes;
         }
 

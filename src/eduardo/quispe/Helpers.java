@@ -2,7 +2,6 @@ package eduardo.quispe;
 
 import helper.BigFunctions;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -63,19 +62,18 @@ public class Helpers {
 
         for (int i = 0; i < currentNodes.size(); i++) {
             BigDecimal outputValue = currentNodes.get(i).getOutputValue();
+            BigDecimal err = outputValue.multiply(new BigDecimal(1).subtract(outputValue), MC);
+            BigDecimal errSum = new BigDecimal(0);
             /* for each output node... */
             for (int j = 0; j < nextNodes.size(); j++) {
                 OutputNode oNode = (OutputNode) nextNodes.get(j);
-
-                // TODO oNode.getWeights().get(i).getValue()  might not be working, TEST.
-                outputValue.multiply(new BigDecimal(1).subtract(outputValue).multiply(oNode.getError().multiply(oNode.getWeights().get(i).getValue())));
-                System.out.println();
-
+                errSum = errSum.add(oNode.getError().multiply(oNode.getWeights().get(i).getValue()), MC);
+                System.out.println("error Sum: " + errSum);
             }
-
+            err = err.multiply(errSum, MC);
+            ((HiddenNode) currentNodes.get(i)).setError(err);
+            System.out.println("Hidden node error: " + err);
         }
-
-
     }
 
     /*Err_k=O_k (1-O_k)(T_k-O_k)*/
@@ -83,9 +81,7 @@ public class Helpers {
 //        calcHiddenError(currentNodes, null, classifierValue);
 
         for (int i = 0; i < currentNodes.size(); i++) {
-
             BigDecimal output = currentNodes.get(i).getOutputValue();
-
             // output node error calculation
             BigDecimal error = output.multiply(new BigDecimal(1).subtract(output), MC).multiply(classifierValue.subtract(output), MC);
             // TODO get rid of casting, BAD!.
@@ -95,4 +91,35 @@ public class Helpers {
 
 
     }
+
+    static Tuple calcNewWeights(Tuple tuple) {
+        // TODO: generify hidden nodes and output nodes so we only have to run 1 loop.
+        ArrayList<Node> newHiddenNodes = new ArrayList<>();
+        ArrayList<Node> newOutputNodes = new ArrayList<>();
+
+        ArrayList<? extends Node> inputNodes = tuple.getInputNodes();
+        ArrayList<? extends Node> hiddenNodes = tuple.getHiddenNodes();
+        ArrayList<? extends Node> outputNodes = tuple.getOutputNodes();
+
+        ArrayList<Node> nodes = new ArrayList<>();
+        nodes.addAll(hiddenNodes);
+        nodes.addAll(outputNodes);
+
+        /* calc for hidden nodes */
+        for (int i = 0; i < hiddenNodes.size(); i++) {
+            ArrayList<? extends Edge> weights = hiddenNodes.get(i).getWeights();
+            HiddenNode hiddenNode = (HiddenNode) hiddenNodes.get(i);
+            for (int j = 0; j < weights.size(); j++) {
+                BigDecimal w = weights.get(j).getValue();
+                System.out.println("old weight: " + w);
+                BigDecimal newW = w.add(tuple.getLearningRate().multiply(hiddenNode.getError(), MC).multiply(inputNodes.get(j).getOutputValue()), MC);
+                System.out.println("new weight: " + newW);
+            }
+        }
+        /* calc for output nodes */
+
+        return new Tuple(new Classifier(tuple.getClassifierValue()), tuple.getLearningRate(), tuple.getInputNodes(), hiddenNodes, outputNodes);
+    }
+
+
 }

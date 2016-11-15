@@ -14,10 +14,12 @@ public class Main {
 
         ArrayList<Tuple> tuples = new ArrayList<>();
 
+        BigDecimal learningRate = new BigDecimal(0.7, MC);
+
         tuples.add(
                 new Tuple(
                         new Classifier(new BigDecimal(1)),
-                        new ArrayList<>(Arrays.asList(
+                        learningRate, new ArrayList<>(Arrays.asList(
                                 /* Input nodes */
                                 new InputNode(new BigDecimal(0.5, MC), null),
                                 new InputNode(new BigDecimal(0.0, MC), null),
@@ -49,6 +51,7 @@ public class Main {
 //        tuples.add(
 //                new Tuple(
 //                        new Classifier(new BigDecimal(1)),
+//                        learningRate,
 //                        new ArrayList<>(Arrays.asList(
 //                                new InputNode(new BigDecimal(0.0, MC), null),
 //                                new InputNode(new BigDecimal(0.3, MC), null),
@@ -88,16 +91,16 @@ public class Main {
             System.out.println("Epoch " + i);
             for (int j = 0; j < tuples.size(); j++) {
                 System.out.println("Tuple " + j);
-                // calculate and udpate inputs and outputs
+                // calculate and update inputs and outputs
                 Helpers.calcNetIO(tuples.get(j).getInputNodes(), tuples.get(j).getHiddenNodes());
                 Helpers.calcNetIO(tuples.get(j).getHiddenNodes(), tuples.get(j).getOutputNodes());
 
                 // errors
                 Helpers.calcOutputError(tuples.get(j).getOutputNodes(), tuples.get(j).getClassifierValue());
-
-                System.out.println("oefeiunfeineifne");
-
                 Helpers.calcHiddenError(tuples.get(j).getHiddenNodes(), tuples.get(j).getOutputNodes(), tuples.get(j).getClassifierValue());
+
+                // calculate new weights
+                Helpers.calcNewWeights(tuples.get(i));
 
             }
         }
