@@ -2,6 +2,7 @@ package eduardo.quispe;
 
 import helper.BigFunctions;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -105,10 +106,17 @@ public class Helpers {
         nodes.addAll(hiddenNodes);
         nodes.addAll(outputNodes);
 
+        System.out.println("Hidden Nodes");
         /* calc for hidden nodes */
         for (int i = 0; i < hiddenNodes.size(); i++) {
             ArrayList<? extends Edge> weights = hiddenNodes.get(i).getWeights();
             HiddenNode hiddenNode = (HiddenNode) hiddenNodes.get(i);
+            // calculate new bias
+            BigDecimal bias = hiddenNode.getBias();
+            BigDecimal newBias = bias.add(tuple.getLearningRate().multiply(hiddenNode.getError()), MC);
+            System.out.println("old bias" + bias);
+            System.out.println("new bias" + newBias);
+
             for (int j = 0; j < weights.size(); j++) {
                 BigDecimal w = weights.get(j).getValue();
                 System.out.println("old weight: " + w);
@@ -116,7 +124,25 @@ public class Helpers {
                 System.out.println("new weight: " + newW);
             }
         }
+
+        //TODO get rid of duplicate code warning
+        System.out.println("Output Nodes");
         /* calc for output nodes */
+        for (int i = 0; i < outputNodes.size(); i++) {
+            ArrayList<? extends Edge> weights = outputNodes.get(i).getWeights();
+            OutputNode outputNode = (OutputNode) outputNodes.get(i);
+            BigDecimal bias = outputNode.getBias();
+            BigDecimal newBias = bias.add(tuple.getLearningRate().multiply(outputNode.getError(), MC));
+            System.out.println("old bias " + bias);
+            System.out.println("new bias " + newBias);
+
+            for (int j = 0; j < weights.size(); j++) {
+                BigDecimal w1 = weights.get(j).getValue();
+                System.out.println("old weight: " + w1);
+                BigDecimal newW = w1.add(tuple.getLearningRate().multiply(outputNode.getError(), MC).multiply(hiddenNodes.get(j).getOutputValue()), MC);
+                System.out.println("new weight: " + newW);
+            }
+        }
 
         return new Tuple(new Classifier(tuple.getClassifierValue()), tuple.getLearningRate(), tuple.getInputNodes(), hiddenNodes, outputNodes);
     }
