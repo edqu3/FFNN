@@ -5,8 +5,12 @@ import java.util.ArrayList;
 
 class OutputNode extends Node {
 
+    private BigDecimal error;
+
     OutputNode(BigDecimal value, ArrayList<Edge> weights, Bias bias) {
+
         super(value, weights, bias);
+        this.error = new BigDecimal(0);
     }
 
     @Override
@@ -18,5 +22,15 @@ class OutputNode extends Node {
             }
             super.weights = hiddenWeights;
         }
+    }
+
+    public void setError(BigDecimal error) {
+        this.error = error;
+    }
+
+    public BigDecimal getError() {
+        if (error != null)
+            return error;
+        return null;
     }
 }

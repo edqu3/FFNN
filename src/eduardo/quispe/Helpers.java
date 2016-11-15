@@ -57,20 +57,39 @@ public class Helpers {
         return input;
     }
 
-    /*Err_k=O_k (1-O_k)(T_k-O_k)*/
+
+    /* Err_j=O_j (1-O_j ) ?_k Err_k w_jk */
     static void calcHiddenError(ArrayList<? extends Node> currentNodes, ArrayList<? extends Node> nextNodes, BigDecimal classifierValue) {
+
+        for (int i = 0; i < currentNodes.size(); i++) {
+            BigDecimal outputValue = currentNodes.get(i).getOutputValue();
+            /* for each output node... */
+            for (int j = 0; j < nextNodes.size(); j++) {
+                OutputNode oNode = (OutputNode) nextNodes.get(j);
+
+                // TODO oNode.getWeights().get(i).getValue()  might not be working, TEST.
+                outputValue.multiply(new BigDecimal(1).subtract(outputValue).multiply(oNode.getError().multiply(oNode.getWeights().get(i).getValue())));
+                System.out.println();
+
+            }
+
+        }
+
 
     }
 
-    static void calcOutputError(ArrayList<? extends Node> currenNodes, BigDecimal classifierValue) {
-//        calcHiddenError(currenNodes, null, classifierValue);
+    /*Err_k=O_k (1-O_k)(T_k-O_k)*/
+    static void calcOutputError(ArrayList<? extends Node> currentNodes, BigDecimal classifierValue) {
+//        calcHiddenError(currentNodes, null, classifierValue);
 
-        for (int i = 0; i < currenNodes.size(); i++) {
+        for (int i = 0; i < currentNodes.size(); i++) {
 
-            BigDecimal output = currenNodes.get(i).getOutputValue();
+            BigDecimal output = currentNodes.get(i).getOutputValue();
 
             // output node error calculation
             BigDecimal error = output.multiply(new BigDecimal(1).subtract(output), MC).multiply(classifierValue.subtract(output), MC);
+            // TODO get rid of casting, BAD!.
+            ((OutputNode) currentNodes.get(i)).setError(error);
             System.out.println("error " + error);
         }
 

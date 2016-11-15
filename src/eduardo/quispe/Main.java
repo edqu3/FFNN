@@ -94,7 +94,10 @@ public class Main {
 
                 // errors
                 Helpers.calcOutputError(tuples.get(j).getOutputNodes(), tuples.get(j).getClassifierValue());
-//                Helpers.calcHiddenError(tuples.get(j).getHiddenNodes(), tuples.get(j).getOutputNodes(), tuples.get(j).getClassifierValue());
+
+                System.out.println("oefeiunfeineifne");
+
+                Helpers.calcHiddenError(tuples.get(j).getHiddenNodes(), tuples.get(j).getOutputNodes(), tuples.get(j).getClassifierValue());
 
             }
         }
