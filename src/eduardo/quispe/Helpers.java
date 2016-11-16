@@ -2,13 +2,13 @@ package eduardo.quispe;
 
 import helper.BigFunctions;
 
-import java.lang.reflect.Array;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-public class Helpers {
+class Helpers {
 
     // round up to nearest 1000th
     private final static MathContext MC = new MathContext(3, RoundingMode.HALF_UP);
@@ -25,7 +25,7 @@ public class Helpers {
      * @param currNodes
      * @return
      */
-    public static void calcNetIO(ArrayList<? extends Node> prevNodes, ArrayList<? extends Node> currNodes) {
+    static void calcNetIO(ArrayList<? extends Node> prevNodes, ArrayList<? extends Node> currNodes) {
 
         for (Node node : currNodes) {
             BigDecimal netInput, output;
@@ -86,8 +86,6 @@ public class Helpers {
             currentNodes.get(i).setError(error);
             System.out.println("error " + error);
         }
-
-
     }
 
     static void calcNewEdges(Tuple tuple) {

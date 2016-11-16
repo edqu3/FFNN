@@ -6,6 +6,8 @@ abstract class Edge {
 
     private BigDecimal value = new BigDecimal(0);
 
+    
+
     private BigDecimal cumulativeValue = new BigDecimal(0);
 
     Edge(BigDecimal value){
