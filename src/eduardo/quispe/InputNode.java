@@ -3,9 +3,9 @@ package eduardo.quispe;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class InputNode extends Node {
+class InputNode extends Node {
 
-    public InputNode(BigDecimal value, ArrayList<Edge> weights) {
+    InputNode(BigDecimal value, ArrayList<Edge> weights) {
         super(value, weights, null);
     }
 

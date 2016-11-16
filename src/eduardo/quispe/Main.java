@@ -102,6 +102,7 @@ public class Main {
                 // calculate new weights
                 Helpers.calcNewEdges(tuples.get(i));
 
+                System.out.println();
             }
         }
 

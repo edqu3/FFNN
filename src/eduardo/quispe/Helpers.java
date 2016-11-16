@@ -104,20 +104,24 @@ class Helpers {
             BigDecimal bias = currentNode.getBias();
             BigDecimal newBias = bias.add(tuple.getLearningRate().multiply(currentNode.getError()), MC);
             for (int j = 0; j < weights.size(); j++) {
-                BigDecimal w = weights.get(j).getValue();
+                Edge currentWeight = weights.get(j);
                 BigDecimal newW = new BigDecimal(0);
                 if (currentNode.getClass().equals(HiddenNode.class)) {
                     System.out.println("hidden node");
-                    newW = w.add(tuple.getLearningRate().multiply(currentNode.getError(), MC).multiply(inputNodes.get(j).getOutputValue()), MC);
+                    newW = currentWeight.getValue().add(tuple.getLearningRate().multiply(currentNode.getError(), MC).multiply(inputNodes.get(j).getOutputValue()), MC);
                 } else if (nodes.get(i).getClass().equals(OutputNode.class)) {
                     System.out.println("output node");
-                    newW = w.add(tuple.getLearningRate().multiply(currentNode.getError(), MC).multiply(hiddenNodes.get(j).getOutputValue()), MC);
+                    newW = currentWeight.getValue().add(tuple.getLearningRate().multiply(currentNode.getError(), MC).multiply(hiddenNodes.get(j).getOutputValue()), MC);
                 } else {
                     System.out.println("???");
                 }
-                System.out.println("old weight: " + w);
+                // store new weights
+                currentWeight.addToValSum(newW);
+                System.out.println("old weight: " + currentWeight.getValue());
                 System.out.println("new weight: " + newW);
             }
+            // store new bias
+            currentNode.addToBiasSum(newBias);
             System.out.println("old bias: " + bias);
             System.out.println("new bias: " + newBias);
         }

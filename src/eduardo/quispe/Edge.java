@@ -6,23 +6,26 @@ abstract class Edge {
 
     private BigDecimal value = new BigDecimal(0);
 
-    
-
     private BigDecimal cumulativeValue = new BigDecimal(0);
 
-    Edge(BigDecimal value){
+    Edge(BigDecimal value) {
         this.value = value;
     }
 
-    BigDecimal getValue(){
+    BigDecimal getValue() {
         return this.value;
     }
 
-    void newValue(BigDecimal newVal){
-        this.cumulativeValue = newVal;
+    /**
+     * add to cumulative weight sum
+     *
+     * @param newVal
+     */
+    void addToValSum(BigDecimal newVal) {
+        this.cumulativeValue = this.cumulativeValue.add(newVal);
     }
 
-    void updateValue(){
+    void updateValue() {
         this.value = this.cumulativeValue;
     }
 

@@ -5,13 +5,14 @@ import java.util.ArrayList;
 
 abstract class Node {
 
-    BigDecimal output, bias, error;
+    BigDecimal output, bias, cumulativeBias, error;
     ArrayList<? extends Edge> weights = new ArrayList<>();
 
     Node(BigDecimal output, ArrayList<? extends Edge> weights, Bias bias) {
         this.bias = bias == null ? null : bias.getValue();
         this.output = output;
         this.weights = weights;
+        this.cumulativeBias = new BigDecimal(0);
     }
 
     ArrayList<? extends Edge> getWeights(){
@@ -41,6 +42,15 @@ abstract class Node {
         return null;
     }
 
+    // probably dont need this
     abstract void update(BigDecimal... newWeights);
+
+    /**
+     * add the new bias to the cumulative bias.
+     * @param newBias
+     */
+    void addToBiasSum(BigDecimal newBias){
+        this.cumulativeBias = cumulativeBias.add(newBias);
+    }
 
 }

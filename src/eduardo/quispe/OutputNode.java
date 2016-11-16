@@ -8,7 +8,7 @@ class OutputNode extends Node {
     OutputNode(BigDecimal value, ArrayList<Edge> weights, Bias bias) {
 
         super(value, weights, bias);
-        this.error = new BigDecimal(0);
+        setError(new BigDecimal(0));
     }
 
     @Override
