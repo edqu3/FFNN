@@ -2,14 +2,26 @@ package eduardo.quispe;
 
 import java.math.BigDecimal;
 
-public abstract class Edge {
+abstract class Edge {
 
-    BigDecimal value = new BigDecimal(0);
+    private BigDecimal value = new BigDecimal(0);
 
-    public Edge(BigDecimal value){
+    private BigDecimal cumulativeValue = new BigDecimal(0);
+
+    Edge(BigDecimal value){
         this.value = value;
     }
 
-    public abstract BigDecimal getValue();
+    BigDecimal getValue(){
+        return this.value;
+    }
+
+    void newValue(BigDecimal newVal){
+        this.cumulativeValue = newVal;
+    }
+
+    void updateValue(){
+        this.value = this.cumulativeValue;
+    }
 
 }

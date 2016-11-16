@@ -49,7 +49,7 @@ public class Helpers {
         for (int i = 0; i < weights.size(); i++) {
             BigDecimal pNode = previousNodes.get(i).getOutputValue();
             BigDecimal weight = weights.get(i).getValue();
-            System.out.println("prev Node value: " + pNode + " * weight: " + weight);
+            System.out.println("prev node output: " + pNode + " * weight: " + weight);
             input = input.add(pNode.multiply(weight, MC));
         }
         input = input.add(currentNode.getBias());
@@ -72,31 +72,25 @@ public class Helpers {
                 System.out.println("error Sum: " + errSum);
             }
             err = err.multiply(errSum, MC);
-            ((HiddenNode) currentNodes.get(i)).setError(err);
+            currentNodes.get(i).setError(err);
             System.out.println("Hidden node error: " + err);
         }
     }
 
     /*Err_k=O_k (1-O_k)(T_k-O_k)*/
     static void calcOutputError(ArrayList<? extends Node> currentNodes, BigDecimal classifierValue) {
-//        calcHiddenError(currentNodes, null, classifierValue);
 
         for (int i = 0; i < currentNodes.size(); i++) {
             BigDecimal output = currentNodes.get(i).getOutputValue();
-            // output node error calculation
             BigDecimal error = output.multiply(new BigDecimal(1).subtract(output), MC).multiply(classifierValue.subtract(output), MC);
-            // TODO get rid of casting, BAD!.
-            ((OutputNode) currentNodes.get(i)).setError(error);
+            currentNodes.get(i).setError(error);
             System.out.println("error " + error);
         }
 
 
     }
 
-    static Tuple calcNewWeights(Tuple tuple) {
-        // TODO: generify hidden nodes and output nodes so we only have to run 1 loop.
-        ArrayList<Node> newHiddenNodes = new ArrayList<>();
-        ArrayList<Node> newOutputNodes = new ArrayList<>();
+    static void calcNewEdges(Tuple tuple) {
 
         ArrayList<? extends Node> inputNodes = tuple.getInputNodes();
         ArrayList<? extends Node> hiddenNodes = tuple.getHiddenNodes();
@@ -106,46 +100,28 @@ public class Helpers {
         nodes.addAll(hiddenNodes);
         nodes.addAll(outputNodes);
 
-        System.out.println("Hidden Nodes");
-        /* calc for hidden nodes */
-        for (int i = 0; i < hiddenNodes.size(); i++) {
-            ArrayList<? extends Edge> weights = hiddenNodes.get(i).getWeights();
-            HiddenNode hiddenNode = (HiddenNode) hiddenNodes.get(i);
-            // calculate new bias
-            BigDecimal bias = hiddenNode.getBias();
-            BigDecimal newBias = bias.add(tuple.getLearningRate().multiply(hiddenNode.getError()), MC);
-            System.out.println("old bias" + bias);
-            System.out.println("new bias" + newBias);
-
+        for (int i = 0; i < nodes.size(); i++) {
+            Node currentNode = nodes.get(i);
+            ArrayList<? extends Edge> weights = currentNode.getWeights();
+            BigDecimal bias = currentNode.getBias();
+            BigDecimal newBias = bias.add(tuple.getLearningRate().multiply(currentNode.getError()), MC);
             for (int j = 0; j < weights.size(); j++) {
                 BigDecimal w = weights.get(j).getValue();
+                BigDecimal newW = new BigDecimal(0);
+                if (currentNode.getClass().equals(HiddenNode.class)) {
+                    System.out.println("hidden node");
+                    newW = w.add(tuple.getLearningRate().multiply(currentNode.getError(), MC).multiply(inputNodes.get(j).getOutputValue()), MC);
+                } else if (nodes.get(i).getClass().equals(OutputNode.class)) {
+                    System.out.println("output node");
+                    newW = w.add(tuple.getLearningRate().multiply(currentNode.getError(), MC).multiply(hiddenNodes.get(j).getOutputValue()), MC);
+                } else {
+                    System.out.println("???");
+                }
                 System.out.println("old weight: " + w);
-                BigDecimal newW = w.add(tuple.getLearningRate().multiply(hiddenNode.getError(), MC).multiply(inputNodes.get(j).getOutputValue()), MC);
                 System.out.println("new weight: " + newW);
             }
+            System.out.println("old bias: " + bias);
+            System.out.println("new bias: " + newBias);
         }
-
-        //TODO get rid of duplicate code warning
-        System.out.println("Output Nodes");
-        /* calc for output nodes */
-        for (int i = 0; i < outputNodes.size(); i++) {
-            ArrayList<? extends Edge> weights = outputNodes.get(i).getWeights();
-            OutputNode outputNode = (OutputNode) outputNodes.get(i);
-            BigDecimal bias = outputNode.getBias();
-            BigDecimal newBias = bias.add(tuple.getLearningRate().multiply(outputNode.getError(), MC));
-            System.out.println("old bias " + bias);
-            System.out.println("new bias " + newBias);
-
-            for (int j = 0; j < weights.size(); j++) {
-                BigDecimal w1 = weights.get(j).getValue();
-                System.out.println("old weight: " + w1);
-                BigDecimal newW = w1.add(tuple.getLearningRate().multiply(outputNode.getError(), MC).multiply(hiddenNodes.get(j).getOutputValue()), MC);
-                System.out.println("new weight: " + newW);
-            }
-        }
-
-        return new Tuple(new Classifier(tuple.getClassifierValue()), tuple.getLearningRate(), tuple.getInputNodes(), hiddenNodes, outputNodes);
     }
-
-
 }

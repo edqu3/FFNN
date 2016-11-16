@@ -27,51 +27,16 @@ class Tuple {
         return hiddenNodes;
     }
 
-     ArrayList<? extends Node> getInputNodes() {
+    ArrayList<? extends Node> getInputNodes() {
         return inputNodes;
     }
 
-     ArrayList<? extends Node> getOutputNodes() {
+    ArrayList<? extends Node> getOutputNodes() {
         return outputNodes;
     }
 
     BigDecimal getClassifierValue() {
         return this.classifier.getValue();
-    }
-
-    static class TupleDefinition {
-
-        private int inputNodes,
-                hiddenNodes,
-                outerNodes;
-
-
-         int getInputNodes() {
-            return inputNodes;
-        }
-
-         int getOuterNodes() {
-            return outerNodes;
-        }
-
-         int getHiddenNodes() {
-            return hiddenNodes;
-        }
-
-         int getNodeCount() {
-            return inputNodes + hiddenNodes + outerNodes;
-        }
-
-        static TupleDefinition createTupleDefinition(int inputNodes, int hiddenNodes, int outerNodes) {
-            return new TupleDefinition(inputNodes, hiddenNodes, outerNodes);
-        }
-
-        private TupleDefinition(int inputNodes, int hiddenNodes, int outerNodes) {
-            this.inputNodes = inputNodes;
-            this.hiddenNodes = hiddenNodes;
-            this.outerNodes = outerNodes;
-        }
-
     }
 
 }

@@ -2,15 +2,10 @@ package eduardo.quispe;
 
 import java.math.BigDecimal;
 
-public class OutputWeight extends Edge {
+class OutputWeight extends Edge {
 
-
-    public OutputWeight(BigDecimal value) {
+    OutputWeight(BigDecimal value) {
         super(value);
     }
 
-    @Override
-    public BigDecimal getValue() {
-        return super.value;
-    }
 }

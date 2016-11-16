@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 class HiddenNode extends Node {
 
-    private BigDecimal error;
-
     HiddenNode(BigDecimal value, ArrayList<HiddenWeight> weights, Bias bias) {
         super(value, weights, bias);
     }
@@ -21,15 +19,5 @@ class HiddenNode extends Node {
             super.weights = hiddenWeights;
         }
 
-    }
-
-    void setError(BigDecimal error) {
-        this.error = error;
-    }
-
-    BigDecimal getError() {
-        if (error != null)
-            return error;
-        return null;
     }
 }

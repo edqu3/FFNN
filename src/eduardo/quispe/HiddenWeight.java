@@ -5,13 +5,8 @@ import java.math.BigDecimal;
 
 public class HiddenWeight extends Edge {
 
-    HiddenWeight(BigDecimal edgeValue) {
-        super(edgeValue);
-
+    HiddenWeight(BigDecimal value) {
+        super(value);
     }
 
-    @Override
-    public BigDecimal getValue() {
-        return super.value;
-    }
 }

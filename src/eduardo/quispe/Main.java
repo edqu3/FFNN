@@ -100,7 +100,7 @@ public class Main {
                 Helpers.calcHiddenError(tuples.get(j).getHiddenNodes(), tuples.get(j).getOutputNodes(), tuples.get(j).getClassifierValue());
 
                 // calculate new weights
-                Helpers.calcNewWeights(tuples.get(i));
+                Helpers.calcNewEdges(tuples.get(i));
 
             }
         }

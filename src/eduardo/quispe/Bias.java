@@ -2,15 +2,9 @@ package eduardo.quispe;
 
 import java.math.BigDecimal;
 
-public class Bias {
+class Bias extends Edge {
 
-    private BigDecimal value;
-
-    public Bias(BigDecimal value) {
-        this.value = value;
-    }
-
-    public BigDecimal getValue() {
-        return value;
+    Bias(BigDecimal value) {
+        super(value);
     }
 }

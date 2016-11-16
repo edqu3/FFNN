@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 abstract class Node {
 
-    BigDecimal output, bias;
+    BigDecimal output, bias, error;
     ArrayList<? extends Edge> weights = new ArrayList<>();
 
     Node(BigDecimal output, ArrayList<? extends Edge> weights, Bias bias) {
@@ -28,6 +28,17 @@ abstract class Node {
 
     void setOutputValue(BigDecimal newOutput){
         this.output = newOutput;
+    }
+
+    void setError(BigDecimal error) {
+        this.error = error;
+    }
+
+    BigDecimal getError(){
+        if (error != null) {
+            return error;
+        }
+        return null;
     }
 
     abstract void update(BigDecimal... newWeights);
