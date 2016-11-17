@@ -118,13 +118,13 @@ class Helpers {
         } else {
           System.out.println("???");
         }
-        w.setNewValue(newW);
         System.out.println("old weight: " + w.getValue());
         System.out.println("new weight: " + newW);
+        w.setNewValue(newW);
       }
-      currentNode.setNewBias(newBias);
       System.out.println("old bias: " + bias);
       System.out.println("new bias: " + newBias);
+      currentNode.setNewBias(newBias);
     }
   }
 }
