@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 
 abstract class Edge {
 
-    private BigDecimal value = new BigDecimal(0);
-
-    private BigDecimal cumulativeValue = new BigDecimal(0);
+    private BigDecimal value;
+    private BigDecimal newValue = new BigDecimal(0);
 
     Edge(BigDecimal value) {
         this.value = value;
@@ -17,16 +16,20 @@ abstract class Edge {
     }
 
     /**
-     * add to cumulative weight sum
+     * This value is added with the next tuples matching weight, then an average will be taken to create the new weight.
      *
      * @param newVal
      */
-    void addToValSum(BigDecimal newVal) {
-        this.cumulativeValue = this.cumulativeValue.add(newVal);
+    void newValue(BigDecimal newVal) {
+        this.newValue = newVal;
+    }
+
+    public BigDecimal getNewValue() {
+        return newValue;
     }
 
     void updateValue() {
-        this.value = this.cumulativeValue;
+        this.value = this.newValue;
     }
 
 }

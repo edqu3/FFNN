@@ -16,37 +16,48 @@ public class Main {
 
         BigDecimal learningRate = new BigDecimal(0.7, MC);
 
-        tuples.add(
-                new Tuple(
-                        new Classifier(new BigDecimal(1)),
-                        learningRate, new ArrayList<>(Arrays.asList(
-                                /* Input nodes */
-                                new InputNode(new BigDecimal(0.5, MC), null),
-                                new InputNode(new BigDecimal(0.0, MC), null),
-                                new InputNode(new BigDecimal(0.2, MC), null)
-                        )),
-                        new ArrayList<>(Arrays.asList(
-                                new HiddenNode(null, new ArrayList<>(Arrays.asList(
-                                        /* to hidden Node 4*/
-                                        new HiddenWeight(new BigDecimal(0.3, MC)),
-                                        new HiddenWeight(new BigDecimal(0.1, MC)),
-                                        new HiddenWeight(new BigDecimal(-0.8, MC))
-                                )), new Bias(new BigDecimal(0.2, MC))),
-                                new HiddenNode(null, new ArrayList<>(Arrays.asList(
-                                        /* to hidden Node 5*/
-                                        new HiddenWeight(new BigDecimal(-0.5, MC)),
-                                        new HiddenWeight(new BigDecimal(0.3, MC)),
-                                        new HiddenWeight(new BigDecimal(0.2, MC))
-                                )), new Bias(new BigDecimal(-0.1, MC)))
-                        )),
-                        new ArrayList<>(Collections.singletonList(
-                                /* to output nodes */
-                                new OutputNode(null, new ArrayList<>(Arrays.asList(
-                                        new OutputWeight(new BigDecimal(-0.7, MC)),
-                                        new OutputWeight(new BigDecimal(0.4, MC))
-                                )), new Bias(new BigDecimal(0.3, MC)))
-                        ))
-                ));
+        tuples.add(new Tuple(
+                new Classifier(new BigDecimal(1)),
+                learningRate,
+                new ArrayList<Node>(
+                        /* Input Noddes */
+                        new InputNode(new BigDecimal(0.5, MC), null),
+                        new InputNode(new BigDecimal(0.0, MC), null),
+                        new InputNode(new BigDecimal(0.2, MC), null)
+                )
+        ));
+
+//        tuples.add(
+//                new Tuple(
+//                        new Classifier(new BigDecimal(1)),
+//                        learningRate, new ArrayList<>(Arrays.asList(
+//                                /* Input nodes */
+//                                new InputNode(new BigDecimal(0.5, MC), null),
+//                                new InputNode(new BigDecimal(0.0, MC), null),
+//                                new InputNode(new BigDecimal(0.2, MC), null)
+//                        )),
+//                        new ArrayList<>(Arrays.asList(
+//                                new HiddenNode(null, new ArrayList<>(Arrays.asList(
+//                                        /* to hidden Node 4*/
+//                                        new HiddenWeight(new BigDecimal(0.3, MC)),
+//                                        new HiddenWeight(new BigDecimal(0.1, MC)),
+//                                        new HiddenWeight(new BigDecimal(-0.8, MC))
+//                                )), new Bias(new BigDecimal(0.2, MC))),
+//                                new HiddenNode(null, new ArrayList<>(Arrays.asList(
+//                                        /* to hidden Node 5*/
+//                                        new HiddenWeight(new BigDecimal(-0.5, MC)),
+//                                        new HiddenWeight(new BigDecimal(0.3, MC)),
+//                                        new HiddenWeight(new BigDecimal(0.2, MC))
+//                                )), new Bias(new BigDecimal(-0.1, MC)))
+//                        )),
+//                        new ArrayList<>(Arrays.asList(
+//                                /* to output nodes */
+//                                new OutputNode(null, new ArrayList<>(Arrays.asList(
+//                                        new OutputWeight(new BigDecimal(-0.7, MC)),
+//                                        new OutputWeight(new BigDecimal(0.4, MC))
+//                                )), new Bias(new BigDecimal(0.3, MC)))
+//                        ))
+//                ));
 
 //        tuples.add(
 //                new Tuple(
@@ -71,7 +82,7 @@ public class Main {
 //                                        new HiddenWeight(new BigDecimal(0.7, MC))
 //                                )), new Bias(new BigDecimal(0.3, MC)))
 //                        )),
-//                        new ArrayList<>(Collections.singletonList(
+//                        new ArrayList<>(Arrays.asList(
 //                                /* to output nodes */
 //                                new OutputNode(null, new ArrayList<>(Arrays.asList(
 //                                        new OutputWeight(new BigDecimal(0.3, MC)),
@@ -100,10 +111,11 @@ public class Main {
                 Helpers.calcHiddenError(tuples.get(j).getHiddenNodes(), tuples.get(j).getOutputNodes(), tuples.get(j).getClassifierValue());
 
                 // calculate new weights
-                Helpers.calcNewEdges(tuples.get(i));
+                Helpers.calcNewEdges(tuples.get(j));
 
                 System.out.println();
             }
+            Tuple.updateEdges(tuples);
         }
 
         // finally update the weights/biases after all tuples processed

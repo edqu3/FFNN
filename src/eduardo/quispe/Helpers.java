@@ -116,7 +116,7 @@ class Helpers {
                     System.out.println("???");
                 }
                 // store new weights
-                currentWeight.addToValSum(newW);
+                currentWeight.newValue(newW);
                 System.out.println("old weight: " + currentWeight.getValue());
                 System.out.println("new weight: " + newW);
             }
