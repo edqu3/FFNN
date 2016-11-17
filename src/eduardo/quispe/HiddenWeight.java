@@ -1,12 +1,11 @@
 package eduardo.quispe;
 
-
 import java.math.BigDecimal;
 
-public class HiddenWeight extends Edge {
+class HiddenWeight extends Edge {
 
-    HiddenWeight(BigDecimal value) {
-        super(value);
-    }
+  HiddenWeight(BigDecimal value) {
+    super(value);
+  }
 
 }

@@ -4,26 +4,17 @@ import java.math.BigDecimal;
 
 abstract class Edge {
 
-    private BigDecimal value = new BigDecimal(0);
+  private BigDecimal value = new BigDecimal(0);
 
-    
+  Edge(BigDecimal value) {
+    this.value = value;
+  }
 
-    private BigDecimal cumulativeValue = new BigDecimal(0);
+  BigDecimal getValue() {
+    return this.value;
+  }
 
-    Edge(BigDecimal value){
-        this.value = value;
-    }
-
-    BigDecimal getValue(){
-        return this.value;
-    }
-
-    void newValue(BigDecimal newVal){
-        this.cumulativeValue = newVal;
-    }
-
-    void updateValue(){
-        this.value = this.cumulativeValue;
-    }
-
+  void setNewValue(BigDecimal newValue) {
+    this.value = newValue;
+  }
 }

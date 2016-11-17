@@ -2,16 +2,15 @@ package eduardo.quispe;
 
 import java.math.BigDecimal;
 
-public class Classifier  {
+class Classifier {
 
+  private BigDecimal value;
 
-    private BigDecimal value;
+  Classifier(BigDecimal value) {
+    this.value = value;
+  }
 
-    public Classifier(BigDecimal value) {
-        this.value = value;
-    }
-
-    public BigDecimal getValue() {
-        return value;
-    }
+  BigDecimal getValue() {
+    return value;
+  }
 }

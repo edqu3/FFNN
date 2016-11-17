@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 class Bias extends Edge {
 
-    Bias(BigDecimal value) {
-        super(value);
-    }
+  Bias(BigDecimal value) {
+    super(value);
+  }
 }
